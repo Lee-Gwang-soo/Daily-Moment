@@ -17,17 +17,17 @@ import {Redirect} from 'react-router';
 import {useAuth} from '../auth';
 import {auth} from '../firebase';
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
 	const {loggedIn} = useAuth();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [status, setStatus] = useState({loading: false, error: false});
 	const [errmsg, setErrmsg] = useState('');
 
-	const handleLogin = async () => {
+	const handleRegister = async () => {
 		try {
 			setStatus({loading: true, error: false});
-			const credential = await auth.signInWithEmailAndPassword(
+			const credential = await auth.createUserWithEmailAndPassword(
 				email,
 				password,
 			);
@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
 		<IonPage>
 			<IonHeader>
 				<IonToolbar>
-					<IonTitle>로그인</IonTitle>
+					<IonTitle>회원가입</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className='ion-padding'>
@@ -70,11 +70,11 @@ const LoginPage: React.FC = () => {
 					</IonItem>
 				</IonList>
 				{status.error && <IonText color='danger'>{errmsg}</IonText>}
-				<IonButton expand='block' onClick={handleLogin}>
-					로그인
+				<IonButton expand='block' onClick={handleRegister}>
+					회원 가입
 				</IonButton>
-				<IonButton expand='block' fill='clear' routerLink='/register'>
-					아이디가 없으신가요?
+				<IonButton expand='block' fill='clear' routerLink='/login'>
+					이미 가입 된 계정이 있으신가요?
 				</IonButton>
 				<IonLoading isOpen={status.loading} />
 			</IonContent>
@@ -82,4 +82,4 @@ const LoginPage: React.FC = () => {
 	);
 };
 
-export default LoginPage;
+export default RegisterPage;

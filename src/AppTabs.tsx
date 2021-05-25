@@ -9,15 +9,13 @@ import {
 import {home as homeIcon, settings as settingsIcon} from 'ionicons/icons';
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
+import {useAuth} from './auth';
 import EntryPage from './pages/EntryPage';
 import HomePage from './pages/Homepage';
 import SettingsPage from './pages/SettingsPage';
 
-interface Props {
-	loggedIn: boolean;
-}
-
-const AppTabs: React.FC<Props> = ({loggedIn}) => {
+const AppTabs: React.FC = ({}) => {
+	const {loggedIn} = useAuth();
 	if (!loggedIn) {
 		return <Redirect to='/login' />;
 	}
@@ -33,7 +31,6 @@ const AppTabs: React.FC<Props> = ({loggedIn}) => {
 				<Route exact path='/my/settings'>
 					<SettingsPage />
 				</Route>
-				<Redirect exact path='/' to='/my/entries' />
 			</IonRouterOutlet>
 			<IonTabBar slot='bottom'>
 				<IonTabButton tab='home' href='/my/entries'>
