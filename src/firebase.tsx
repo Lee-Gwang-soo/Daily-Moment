@@ -5,6 +5,7 @@ import 'firebase/firestore'; // firebase의 DB 기능
 const firebaseConfig = {
 	apiKey: 'AIzaSyDsl1H0ooKzzoBwYVLuGOd_887KYO5nSko',
 	authDomain: 'daily-moments-a14ca.firebaseapp.com',
+	databaseURL : "https://daily-moments-a14ca.firebaseio.com",
 	projectId: 'daily-moments-a14ca',
 	storageBucket: 'daily-moments-a14ca.appspot.com',
 	messagingSenderId: '456978711305',
