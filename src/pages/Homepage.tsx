@@ -8,21 +8,24 @@ import {
 	IonTitle,
 	IonToolbar,
 } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
-import { firestore } from '../firebase';
+import React, {useEffect, useState} from 'react';
+import {firestore} from '../firebase';
+import {Entry, toEntry} from '../models';
+import {useAuth} from '../auth';
 
 const HomePage: React.FC = () => {
-	const [entries, setEntries] = useState([])
+	const {userId} = useAuth();
+	const [entries, setEntries] = useState<Entry[]>([]);
 
-	useEffect(()=> {
-		const entreisRef = firestore.collection('entries');
-		entreisRef.get().then((snapshot) => {
-			const entries = snapshot.docs.map((doc)=> ({
-				id:doc.id, ...doc.data(),
-			}));
-			setEntries(entries)
-		})
-	}, [])
+	useEffect(() => {
+		const entreisRef = firestore
+			.collection('users')
+			.doc(userId)
+			.collection('entries');
+		entreisRef.get().then(({docs}) => {
+			setEntries(docs.map(toEntry));
+		});
+	}, [userId]);
 
 	return (
 		<IonPage>
